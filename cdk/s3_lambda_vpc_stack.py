@@ -163,7 +163,7 @@ class S3LambdaVpcStack(Stack):
         # -----------------------
         lambda_function = _lambda.Function(
             self, "VpcLambda",
-            runtime=_lambda.Runtime.PYTHON_3_11,
+            runtime=_lambda.Runtime.PYTHON_3_12,
             handler="lambda_function.lambda_handler",
             code=_lambda.Code.from_bucket(
                 bucket=buckets["ArtifactsBucket"],
