@@ -1,2 +1,4 @@
 <img width="1472" height="863" alt="sixthStreet" src="https://github.com/user-attachments/assets/7068242a-e9c1-4d9a-942a-73c49784f0d4" />
 
+### Deploy
+The lambda is built using a Github Action, but we need to run update-function-code on the lambda passing in the new artifact to update it. This can be done in the action but actions won't give us much control or orchestration. Tying build and deploy too tightly will give us too little control. For deploy we would want a unique pipeline that allows us to update the function with a version we pass in at runtime. This can be chained in the build workflow to deploy released by default in a test environment but still give us control over deploying to a production environment. We would want to auto deploy to a test environment, then once that is tested, it can be promoted to a prod environment. Having a deploy pipeline will allow this and also allow rollbacks if necessary. 
