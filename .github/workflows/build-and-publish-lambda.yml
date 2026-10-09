@@ -1,0 +1,55 @@
+name: Build and Publish Lambda to S3
+
+on:
+  push:
+    tags:
+      - 'v*'   # Trigger on version tags like v1.0.0
+    branches:
+      - main   # Optional: also trigger on main branch
+
+jobs:
+  build-and-upload:
+    runs-on: self-hosted  # Use your AWS-based self-hosted runner
+
+    env:
+      AWS_REGION: us-east-1
+      LAMBDA_NAME: my-python-lambda
+      S3_BUCKET: my-lambda-artifacts-bucket
+
+    steps:
+      # 1. Checkout source code
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Set up Python 3.12 (latest Lambda runtime)
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # 4. Build Lambda artifact
+      - name: Build Lambda ZIP
+        run: |
+          mkdir build
+          cp -r lambda_function.py build/
+          cp -r venv/lib/python*/site-packages/* build/
+          cd build
+          zip -r ../${LAMBDA_NAME}.zip .
+          cd ..
+
+      # 5. Upload to S3 with versioned name
+      - name: Upload Lambda artifact to S3
+        run: |
+          VERSION_TAG=${GITHUB_REF_NAME} # Git tag or branch name
+          COMMIT_SHA=${GITHUB_SHA::8}    # Short commit SHA
+          ARTIFACT_KEY="${LAMBDA_NAME}-${VERSION_TAG}-${COMMIT_SHA}.zip"
+          aws s3 cp ${LAMBDA_NAME}.zip s3://${S3_BUCKET}/${ARTIFACT_KEY}
+          echo "Uploaded artifact to s3://${S3_BUCKET}/${ARTIFACT_KEY}"
