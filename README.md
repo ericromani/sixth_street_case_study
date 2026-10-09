@@ -13,3 +13,10 @@ To keep workflows clean, I would put the lambda code and build in its own repo, 
 - Assuming custom Github runner in AWS env that has IAM role allowing it to push to the artifacts bucket. 
 - Assuming a single AWS region deploy
 
+### Other things to add in a real world case
+- Alerting on the DLQ
+- Exporting Lambda Logs
+- Custom metrics published from the Lambda - alerting
+- VPC with egress filtering and internet egress
+- Bucket lifecycle policy to remove old unused artifacts
+- Testing environment - deploy to test, verify with metrics, deploy to prod.
