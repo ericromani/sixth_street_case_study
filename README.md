@@ -8,3 +8,8 @@ I've put all the infra in a single stack for simplicity but generally I would ha
 
 ### Repo separation 
 To keep workflows clean, I would put the lambda code and build in its own repo, so it can have checks that are relevant to it. Code scanning for quality and needed version bumps. Lambda build and publish, tagging the repo to keep the repo tags in line with published versions of the artifact. CDK would live elsewhere in a repo intended for that in which the infrastructure deploy workflow would be wired up. 
+
+### Assumptions
+- Assuming custom Github runner in AWS env that has IAM role allowing it to push to the artifacts bucket. 
+- Assuming a single AWS region deploy
+
