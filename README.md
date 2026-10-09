@@ -1,1 +1,2 @@
-<img width="1472" height="863" alt="sixthStreetExaclidraw" src="https://github.com/user-attachments/assets/1adf03fe-38ca-4499-96f1-fe9cd15ac275" />
+<img width="1472" height="863" alt="sixthStreet" src="https://github.com/user-attachments/assets/7068242a-e9c1-4d9a-942a-73c49784f0d4" />
+
