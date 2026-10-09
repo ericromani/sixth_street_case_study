@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-from aws_cdk import core
-from bucket_policy_stack import BucketPolicyStack
+from aws_cdk import App
+from s3_lambda_vpc_stack import S3LambdaVpcStack
 
-app = core.App()
+app = App()
 
-# Deploy the stack
-BucketPolicyStack(app, "cdk")
+S3LambdaVpcStack(app, "S3LambdaVpcStack")
 
 app.synth()
